@@ -7,12 +7,16 @@ import { ItemModule } from './item/item.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ExampleMiddleware } from './users/middleware/example.middleware';
+import { People } from './typeORM/entities/people.entity';
+import { PeopleModule } from './people/people.module';
+import { Profile } from './typeORM/entities/profile.entity';
 
 
 @Module({
   imports: [
     // ItemModule,
-    UsersModule,
+    // UsersModule,
+    PeopleModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -20,8 +24,9 @@ import { ExampleMiddleware } from './users/middleware/example.middleware';
       username: 'root',
       password: '',
       database: 'testss',
-      entities: [],
+      entities: [People, Profile],
       synchronize: true,
+      autoLoadEntities: true,
     }),
   ],
   controllers: [AppController],
