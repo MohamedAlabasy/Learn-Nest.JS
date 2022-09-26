@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Put, Delete, Body, UsePipes, ValidationPipe, Param, ParseIntPipe } from '@nestjs/common';
-import { async } from 'rxjs';
 import { People } from 'src/typeORM/entities/people.entity';
 import { CreatePeople } from './dto/create-people.dto';
 import { PeopleService } from './people.service';
+import { plainToClass } from "class-transformer";
+
 
 @Controller('people')
 export class PeopleController {
@@ -10,10 +11,12 @@ export class PeopleController {
     @Get()
     getPeople() {
         return this.peopleService.getPeople()
+        // const people= this.peopleService.getPeople()
+        // return new CreatePeople(people)
     }
 
     @Post()
-    @UsePipes(new ValidationPipe())
+    @UsePipes(ValidationPipe)
     createPeople(@Body() people: CreatePeople) {
         return this.peopleService.createPeople(people)
     }
